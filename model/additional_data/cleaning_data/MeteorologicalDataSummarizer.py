@@ -68,6 +68,6 @@ def process_data(input_file, output_file):
         print(f"Ocorreu um erro: {e}")
 
 
-input_file = 'INMET_SE_SP_BAURU_2019_original.csv'  # Substitua pelo caminho do arquivo CSV original
-output_file = 'INMET_SE_SP_BAURU_2019.csv'  # Nome do novo arquivo CSV
+input_file = 'INMET_CO_GO_GOIANIA_2020_original.csv'  # Substitua pelo caminho do arquivo CSV original
+output_file = 'INMET_CO_GO_GOIANIA_2020.csv'  # Nome do novo arquivo CSV
 process_data(input_file, output_file)
