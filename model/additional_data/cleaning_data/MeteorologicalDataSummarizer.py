@@ -7,13 +7,13 @@ def process_data(input_file, output_file):
         
         # Selecionando as colunas de interesse
         selected_columns = [
-            'Data',
+            'Data', # não precisa mudar
             'PRECIPITACAO TOTAL, HORARIO (mm)', 
-            'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)', 
+            'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)', # não precisa mudar
             'RADIACAO GLOBAL (KJ/m2)', 
             'TEMPERATURA DO AR - BULBO SECO, HORARIA (0C)', 
-            'UMIDADE RELATIVA DO AR, HORARIA (%)', 
-            'VENTO, RAJADA MAXIMA (m/s)'
+            'UMIDADE RELATIVA DO AR, HORARIA (%)', # não precisa mudar
+            'VENTO, RAJADA MAXIMA (m/s)' # não precisa mudar
         ]
         
         # Extraindo latitude e longitude dos metadados nas linhas 5 e 6
@@ -67,7 +67,7 @@ def process_data(input_file, output_file):
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
 
-# Exemplo de uso
-input_file = 'INMET_CO_GO_GOIANIA_original.csv'  # Substitua pelo caminho do arquivo CSV original
-output_file = 'INMET_CO_GO_GOIANIA.csv'  # Nome do novo arquivo CSV
+
+input_file = 'INMET_NE_PB_JOAO PESSOA_2019_original.csv'  # Substitua pelo caminho do arquivo CSV original
+output_file = 'INMET_NE_PB_JOAO PESSOA_2019.csv'  # Nome do novo arquivo CSV
 process_data(input_file, output_file)
