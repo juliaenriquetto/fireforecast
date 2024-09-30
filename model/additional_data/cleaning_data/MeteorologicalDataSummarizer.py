@@ -22,17 +22,13 @@ def process_data(input_file, output_file):
             latitude = lines[4].split(';')[1].strip()
             longitude = lines[5].split(';')[1].strip()
 
-        # Adicionando latitude e longitude aos dados
-        df['latitude'] = latitude
-        df['longitude'] = longitude
-
         # Filtrando apenas as colunas desejadas
-        filtered_df = df[selected_columns].copy()  # Usa .copy() para evitar o erro de cópia
+        filtered_df = df[selected_columns].copy()
 
         # Convertendo a coluna 'Data' para o formato de data
-        filtered_df.loc[:, 'Data'] = pd.to_datetime(filtered_df['Data'], format='%Y/%m/%d')
+        filtered_df['Data'] = pd.to_datetime(filtered_df['Data'], format='%Y/%m/%d')
 
-        # Convertendo colunas numéricas de tipo object para float, se necessário
+        # Convertendo colunas numéricas de tipo object para float, tratando valores não numéricos
         numeric_columns = [
             'PRECIPITACAO TOTAL, HORARIO (mm)', 
             'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)', 
@@ -41,20 +37,25 @@ def process_data(input_file, output_file):
             'UMIDADE RELATIVA DO AR, HORARIA (%)', 
             'VENTO, RAJADA MAXIMA (m/s)'
         ]
-        
-        for column in numeric_columns:
-            filtered_df[column] = pd.to_numeric(filtered_df[column], errors='coerce')  # Converte para numérico
 
-        # Agrupando por 'Data' e calculando a média
+        # Aplicando a conversão de strings para floats apenas se a coluna for do tipo object
+        for column in numeric_columns:
+            if filtered_df[column].dtype == 'object':
+                filtered_df[column] = filtered_df[column].str.replace(',', '.').astype(float)
+        
+        # Agrupando por 'Data' e calculando a média para todas as colunas exceto 'PRECIPITACAO TOTAL, HORARIO (mm)'
         daily_means = filtered_df.groupby('Data').mean()
 
         # Arredondando as médias para 2 casas decimais
         daily_means = daily_means.round(2)
 
-        # Adicionando latitude e longitude ao início do DataFrame, sem repetir no final
+        # Calculando a soma da precipitação diária
+        daily_means['PRECIPITACAO TOTAL, HORARIO (mm)'] = filtered_df.groupby('Data')['PRECIPITACAO TOTAL, HORARIO (mm)'].sum()
+
+        # Adicionando latitude e longitude ao início do DataFrame
         daily_means.insert(0, 'latitude', latitude)
         daily_means.insert(1, 'longitude', longitude)
-        
+
         # Salvando o arquivo CSV com os dados diários
         daily_means.to_csv(output_file, index=True)
         print(f"Médias diárias calculadas, arredondadas e salvas em {output_file}.")
@@ -67,6 +68,6 @@ def process_data(input_file, output_file):
         print(f"Ocorreu um erro: {e}")
 
 # Exemplo de uso
-input_file = 'INMET_CO_DF_BRASILIA_2019.csv'  # caminho do arquivo csv
-output_file = 'medias_diarias_Brasilia.csv'   # copia do arquivo CSV, alterado
+input_file = 'INMET_CO_GO_GOIANIA_original.csv'  # Substitua pelo caminho do arquivo CSV original
+output_file = 'INMET_CO_GO_GOIANIA.csv'  # Nome do novo arquivo CSV
 process_data(input_file, output_file)
