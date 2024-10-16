@@ -1,18 +1,18 @@
 import pandas as pd
-import glob # carregar todos os arquivos de uma vez
+import glob # load all files at once
 
-# caminho onde estão armazenados os CSVs
+# path where the CSVs are stored
 path = '2024/*.csv'
 
-# carregar todos os arquivos CSV da pasta
+# load all CSV files from the folder
 arquivos_csv = glob.glob(path)
 
-# ler e concatenar os dataframes 
+# read and concatenate the dataframes
 df_list = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
 df_completo = pd.concat(df_list, ignore_index=True)
 
-# salvar o dataframe concatenado em um novo arquivo CSV
+# save the concatenated dataframe to a new CSV file
 df_completo.to_csv('2024/df_2024.csv', index=False)
 
-# exibir as primeiras linhas do dataframe concatenado
+# display the first rows of the concatenated dataframe
 print("Dados concatenados salvos com sucesso!")

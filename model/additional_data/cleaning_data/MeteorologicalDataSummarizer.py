@@ -2,33 +2,33 @@ import pandas as pd
 
 def process_data(input_file, output_file):
     try:
-        # Lê o arquivo CSV ignorando as linhas de metadados (as primeiras 8 linhas) e especifica a codificação
+        # Read the CSV file ignoring metadata lines (the first 8 lines) and specifying the encoding
         df = pd.read_csv(input_file, skiprows=8, delimiter=';', encoding='ISO-8859-1')
         
-        # Selecionando as colunas de interesse
+        # Selecting the columns of interest
         selected_columns = [
-            'Data', # não precisa mudar
+            'Data',
             'PRECIPITACAO TOTAL, HORARIO (mm)', 
-            'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)', # não precisa mudar
+            'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)',
             'RADIACAO GLOBAL (KJ/m2)', 
             'TEMPERATURA DO AR - BULBO SECO, HORARIA (0C)', 
-            'UMIDADE RELATIVA DO AR, HORARIA (%)', # não precisa mudar
-            'VENTO, RAJADA MAXIMA (m/s)' # não precisa mudar
+            'UMIDADE RELATIVA DO AR, HORARIA (%)', 
+            'VENTO, RAJADA MAXIMA (m/s)'
         ]
         
-        # Extraindo latitude e longitude dos metadados nas linhas 5 e 6
+        # Extracting latitude and longitude from the metadata in lines 5 and 6
         with open(input_file, 'r', encoding='ISO-8859-1') as f:
             lines = f.readlines()
             latitude = lines[4].split(';')[1].strip()
             longitude = lines[5].split(';')[1].strip()
 
-        # Filtrando apenas as colunas desejadas
+        # Filtering only the desired columns
         filtered_df = df[selected_columns].copy()
 
-        # Convertendo a coluna 'Data' para o formato de data
+        # Converting the 'Data' column to date format
         filtered_df['Data'] = pd.to_datetime(filtered_df['Data'], format='%Y/%m/%d')
 
-        # Convertendo colunas numéricas de tipo object para float, tratando valores não numéricos
+        # Converting numeric columns from object type to float, handling non-numeric values
         numeric_columns = [
             'PRECIPITACAO TOTAL, HORARIO (mm)', 
             'PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)', 
@@ -38,25 +38,25 @@ def process_data(input_file, output_file):
             'VENTO, RAJADA MAXIMA (m/s)'
         ]
 
-        # Aplicando a conversão de strings para floats apenas se a coluna for do tipo object
+        # Applying conversion from strings to floats only if the column is of object type
         for column in numeric_columns:
             if filtered_df[column].dtype == 'object':
                 filtered_df[column] = filtered_df[column].str.replace(',', '.').astype(float)
         
-        # Agrupando por 'Data' e calculando a média para todas as colunas exceto 'PRECIPITACAO TOTAL, HORARIO (mm)'
+        # Grouping by 'Data' and calculating the mean for all columns except 'PRECIPITACAO TOTAL, HORARIO (mm)'
         daily_means = filtered_df.groupby('Data').mean()
 
-        # Arredondando as médias para 2 casas decimais
+        # Rounding the means to 2 decimal places
         daily_means = daily_means.round(2)
 
-        # Calculando a soma da precipitação diária
+        # Calculating the sum of daily precipitation
         daily_means['PRECIPITACAO TOTAL, HORARIO (mm)'] = filtered_df.groupby('Data')['PRECIPITACAO TOTAL, HORARIO (mm)'].sum()
 
-        # Adicionando latitude e longitude ao início do DataFrame
+        # Adding latitude and longitude at the beginning of the DataFrame
         daily_means.insert(0, 'latitude', latitude)
         daily_means.insert(1, 'longitude', longitude)
 
-        # Salvando o arquivo CSV com os dados diários
+        # Saving the CSV file with daily data
         daily_means.to_csv(output_file, index=True)
         print(f"Médias diárias calculadas, arredondadas e salvas em {output_file}.")
         
@@ -68,6 +68,6 @@ def process_data(input_file, output_file):
         print(f"Ocorreu um erro: {e}")
 
 
-input_file = 'INMET_SE_SP_BAURU_2024_original.csv'  # Substitua pelo caminho do arquivo CSV original
-output_file = 'INMET_SE_SP_BAURU_2024.csv'  # Nome do novo arquivo CSV
+input_file = 'INMET_SE_SP_BAURU_2024_original.csv' # Replace with the path to the original CSV file
+output_file = 'INMET_SE_SP_BAURU_2024.csv' # Name of the new CSV file
 process_data(input_file, output_file)
