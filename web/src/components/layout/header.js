@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { ChevronRight } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { Menu } from 'lucide-react'
+import { useWindowSize } from 'react-use';
+import { cn } from '@/lib/utils';
 
 import FireforecastHeading from '@/components/fireforecast-heading'
 import { Button } from '@/components/ui/button'
