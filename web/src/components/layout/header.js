@@ -16,7 +16,7 @@ const links = [
     },
     {
       url: '/referencias',
-      label: 'Referencias'
+      label: 'Referências'
     },
     {
       url: '/autoras',
@@ -74,7 +74,7 @@ export default function Header() {
               <div className="hidden flex-row items-center gap-x-4 md:flex">
                 <Link href={pathname !== '/forecast' ? '/forecast' : '/artigo'}>
                   <Button className="flex h-9 items-center gap-x-0.5 rounded-full font-medium">
-                    {pathname !== '/forecast' ? 'Forecast' : 'Artigo'}
+                    {pathname !== '/forecast' ? 'Previsão' : 'Artigo'}
                     <ChevronRight className="-mr-1" height={16} width={16} />
                   </Button>
                 </Link>
