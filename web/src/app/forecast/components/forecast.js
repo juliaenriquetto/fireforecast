@@ -1,22 +1,40 @@
-"use client"
+"use client";
 
 import Layout from '@/components/layout';
-import Model from '@/app/forecast/components/model/map'
+import Map from './model/map';
+import { Calendar } from "@/components/ui/calendar";
+import * as React from "react";
 
 export default function Forecast() {
+  const [date, setDate] = React.useState(new Date());
+
   return (
     <Layout className="h-full w-full justify-start">
-      <div className="flex min-h-[80vh] w-full items-start justify-center py-10">
-        <main className="relative flex w-full flex-col items-center justify-center gap-y-10 text-lg font-normal md:w-4/5 md:justify-between">
-          <div className="flex flex-col items-center justify-start gap-y-10 sm:gap-y-20">
-            <div className="flex h-full w-full flex-col items-center justify-start gap-y-1 px-8 md:max-w-lg lg:max-w-2xl">
-              <article className="flex w-full flex-col items-start gap-y-6 pb-10 md:w-[40rem] lg:w-[50rem]">
-                <Model />
-              </article>
-            </div>
+      <div className="flex min-h-screen w-full items-start justify-start py-10">
+        <main className="relative flex w-full flex-col md:flex-row">
+          {/* Mapa ocupando metade da tela */}
+          <div className="flex-1 p-4"> {/* Adicionando padding ao contêiner do mapa */}
+            <Map />
+          </div>
+
+          {/* Conteúdo ocupando a outra metade da tela */}
+          <div className="flex-1 flex flex-col p-4"> {/* Padding para o conteúdo */}
+            <h2 className="mt-6">Previsão de incêndio</h2>
+            <h2 className="mt-4">
+              Data de início estimada:{" "}
+              <span className="text-amber-700">
+                {date ? date.toLocaleDateString() : "Selecionar uma data"}
+              </span>
+            </h2>
+            <Calendar 
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-md border w-full" // Mantém o calendário com a largura total
+            />
           </div>
         </main>
       </div>
     </Layout>
-  )
+  );
 }

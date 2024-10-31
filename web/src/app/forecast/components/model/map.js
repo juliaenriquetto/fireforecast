@@ -30,3 +30,7 @@ export default function MapComponent() {
         </div>
     );
 }
+
+MapComponent.displayName = "Map";
+
+export { MapComponent };
