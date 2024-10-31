@@ -135,7 +135,7 @@ const links = [
                 )}
               </div>
               <div className="flex flex-col gap-y-3">
-                <h4 className="font-sans-heading text-sm font-medium">Disclaimer</h4>
+                <h4 className="font-sans-heading text-sm font-medium">Nota</h4>
                 <p className="text-muted-foreground -mt-1 text-sm font-normal">
                 Este modelo tem por objetivo fornecer uma previsão baseada nos dados disponíveis, mesmo quando estes
                 não sejam definitivos. Este trabalho ainda não foi objeto de revisão por pares.
