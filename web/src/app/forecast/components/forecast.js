@@ -2,6 +2,7 @@
 
 import Layout from '@/components/layout';
 import Map from './model/map';
+import Combobox from './model/combobox';
 import { Calendar } from "@/components/ui/calendar";
 import * as React from "react";
 
@@ -18,20 +19,38 @@ export default function Forecast() {
           </div>
 
           {/* Conteúdo ocupando a outra metade da tela */}
-          <div className="flex-1 flex flex-col p-4"> {/* Padding para o conteúdo */}
-            <h2 className="mt-6">Previsão de incêndio</h2>
+          <div className="p-4"> {/* Padding para o conteúdo  flex flex-col*/}
+            <h2 className="mt-6 text-2xl">Previsão de incêndio</h2>
             <h2 className="mt-4">
               Data de início estimada:{" "}
               <span className="text-amber-700">
                 {date ? date.toLocaleDateString() : "Selecionar uma data"}
               </span>
-            </h2>
+            </h2> <br/>
             <Calendar 
               mode="single"
               selected={date}
               onSelect={setDate}
-              className="rounded-md border w-full" // Mantém o calendário com a largura total
-            />
+              className="rounded-md border"
+            /> <br/>
+            <h2>Probabilidade</h2>
+            <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-yellow-300" title="Baixa Probabilidade"></div>
+                <span>25%</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-yellow-500" title="Média Probabilidade"></div>
+                <span>50%</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-orange-600" title="Alta Probabilidade"></div>
+                <span>75%</span>
+            </div>
+            <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-red-800" title="Extrema Probabilidade"></div>
+                <span>85%</span>
+            </div>
+            <Combobox />
           </div>
         </main>
       </div>
