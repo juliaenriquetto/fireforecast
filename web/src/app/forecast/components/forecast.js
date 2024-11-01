@@ -2,6 +2,7 @@
 
 import Layout from '@/components/layout';
 import Map from './model/map';
+import { ComboboxDemo } from "@/components/ui/combobox";
 import { Calendar } from "@/components/ui/calendar";
 import * as React from "react";
 
@@ -50,8 +51,10 @@ export default function Forecast() {
             <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded-full bg-red-800" title="Extrema Probabilidade"></div>
                 <span>85%</span>
-            </div>
-          
+            </div> <br/>
+
+            <ComboboxDemo />
+
           </div>
         </main>
       </div>
