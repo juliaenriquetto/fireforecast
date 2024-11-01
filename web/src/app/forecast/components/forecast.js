@@ -2,7 +2,6 @@
 
 import Layout from '@/components/layout';
 import Map from './model/map';
-import Combobox from './model/combobox';
 import { Calendar } from "@/components/ui/calendar";
 import * as React from "react";
 
@@ -27,12 +26,14 @@ export default function Forecast() {
                 {date ? date.toLocaleDateString() : "Selecionar uma data"}
               </span>
             </h2> <br/>
+
             <Calendar 
               mode="single"
               selected={date}
               onSelect={setDate}
               className="rounded-md border"
             /> <br/>
+
             <h2>Probabilidade</h2>
             <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full bg-yellow-300" title="Baixa Probabilidade"></div>
@@ -50,7 +51,7 @@ export default function Forecast() {
             <div className="w-4 h-4 rounded-full bg-red-800" title="Extrema Probabilidade"></div>
                 <span>85%</span>
             </div>
-            <Combobox />
+          
           </div>
         </main>
       </div>
