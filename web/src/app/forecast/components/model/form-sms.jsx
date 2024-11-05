@@ -4,7 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+// import send from '@/pages/api/send-sms'
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,10 +18,10 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  phone: z.string().min(12, {
-    message: "Telefone deve ter no mínimo 12 digitos",
-  }).max(12, {
-    message: 'Telefone deve ter no máximo 12 digitos'
+  phone: z.string().min(14, {
+    message: "Telefone deve ter no mínimo 14 digitos",
+  }).max(14, {
+    message: 'Telefone deve ter no máximo 14 digitos'
   }),
 });
 
@@ -33,12 +33,18 @@ export function Sms() {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, event) => {
+    event.preventDefault()
+
     try {
-      const response = await fetch('/api/send-sms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+        alert("asdas")
+        const r = await fetch("/api/test")
+        console.log(r)
+
+        const response = await fetch("/api/send-sms", {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           phone: data.phone,
@@ -48,12 +54,12 @@ export function Sms() {
 
       const result = await response.json();
       if (result.success) {
-        console.log("SMS enviado com sucesso:", result.messageResponse);
+        alert("SMS enviado com sucesso:", result.messageResponse);
       } else {
-        console.error("Erro ao enviar SMS:", result.error);
+        alert("Erro ao enviar SMS", result.error);
       }
     } catch (error) {
-      console.error("Erro ao enviar SMS:", error);
+      alert("Erro ao enviar SMS", error);
     }
   };
 
@@ -67,7 +73,7 @@ export function Sms() {
             <FormItem>
               <FormLabel>Avise-me por SMS</FormLabel>
               <FormControl>
-                <Input placeholder="+(xx)xxxxxxxxx" {...field} />
+                <Input placeholder="+55(xx)xxxxxxxxx" {...field} />
               </FormControl>
               <FormDescription>
                 Receba alertas de incêndios do seu estado

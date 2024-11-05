@@ -26,7 +26,6 @@ const frameworks = [
   { value: "ba", label: "Bahia" },
   { value: "ce", label: "Ceará" },
   { value: "es", label: "Espírito Santo" },
-  { value: "ce", label: "Ceará" },
   { value: "go", label: "Goiás" },
   { value: "ma", label: "Maranhão" },
   { value: "mt", label: "Mato Grosso" },
