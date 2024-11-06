@@ -44,7 +44,7 @@ export default function MapComponent() {
               results.data.forEach((row) => {
                 const latitude = parseFloat(row.latitude);
                 const longitude = parseFloat(row.longitude);
-                const probabilidade = parseFloat(row.probabilidade);
+                const probabilidade = parseFloat(row.confidence);
           
                 // Verifica se os valores são válidos antes de criar o marcador
                 if (!isNaN(latitude) && !isNaN(longitude) && !isNaN(probabilidade)) {
