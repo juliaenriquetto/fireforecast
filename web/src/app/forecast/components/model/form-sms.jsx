@@ -1,10 +1,8 @@
-// form-sms.jsx
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-// import send from '@/pages/api/send-sms'
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -37,10 +35,6 @@ export function Sms() {
     event.preventDefault()
 
     try {
-        alert("asdas")
-        const r = await fetch("/api/test")
-        console.log(r)
-
         const response = await fetch("/api/send-sms", {
             method: 'POST',
             headers: {
@@ -48,13 +42,13 @@ export function Sms() {
         },
         body: JSON.stringify({
           phone: data.phone,
-          message: "Receba alertas de incêndios do seu estado",
+          message: "Alerta de queimada!! Há uma chance de [X]% de ocorrência de queimadas na sua região nos próximos dias. Fique atento e evite qualquer atividade que possa provocar incêndios. Se necessário, entre em contato com as autoridades locais para mais orientações e mantenha-se seguro.", // MENSAGEM AQUI 
         }),
       });
 
       const result = await response.json();
       if (result.success) {
-        alert("SMS enviado com sucesso:", result.messageResponse);
+        alert("SMS enviado com sucesso", result.messageResponse);
       } else {
         alert("Erro ao enviar SMS", result.error);
       }

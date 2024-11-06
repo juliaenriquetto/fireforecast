@@ -20,14 +20,6 @@ export default function NotFoundPage() {
                 Voltar
               </Button>
             </Link>
-            <Link href="/contact" aria-label="Contact us">
-              <Button
-                className="dark:border-muted bg-background dark:bg-muted/50 h-9 rounded-full border border-neutral-200"
-                variant={'secondary'}
-              >
-                Contacte-nos
-              </Button>
-            </Link>
           </div>
         </div>
       </main>

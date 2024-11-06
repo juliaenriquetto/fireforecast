@@ -16,13 +16,11 @@ export async function POST(req) {
             from: process.env.TWILIO_PHONE_NUMBER,
             to: phone,
         });
-        //return res.status(200).json({ success: true, messageResponse });
         return NextResponse.json({ success: true, messageResponse });
     } 
     catch (error) 
     {
         console.log('Error sending SMS:', error);
-        //return res.status(500).json({ success: false, error: error.message });
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }
