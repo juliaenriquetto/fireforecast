@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ComboboxDemo } from "@/components/ui/combobox";
 
 const formSchema = z.object({
   phone: z.string().min(14, {
@@ -23,7 +25,7 @@ const formSchema = z.object({
   }),
 });
 
-export function Sms() {
+export function Sms({ selectedCity }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,7 +44,7 @@ export function Sms() {
         },
         body: JSON.stringify({
           phone: data.phone,
-          message: "Alerta de queimada!! Há uma chance de [X]% de ocorrência de queimadas na sua região nos próximos dias. Fique atento e evite qualquer atividade que possa provocar incêndios. Se necessário, entre em contato com as autoridades locais para mais orientações e mantenha-se seguro.", // MENSAGEM AQUI 
+          message: `Alerta de queimada!! Há uma chance de [X]% de ocorrência de queimadas em ${selectedCity} nos próximos dias. Fique atento e evite qualquer atividade que possa provocar incêndios. Se necessário, entre em contato com as autoridades locais para mais orientações e mantenha-se seguro.`,
         }),
       });
 
@@ -76,7 +78,7 @@ export function Sms() {
             </FormItem>
           )}
         />
-        <Button type="submit">Enviar</Button>
+        <Button type="submit" disabled={!selectedCity}>Enviar</Button>
       </form>
     </Form>
   );

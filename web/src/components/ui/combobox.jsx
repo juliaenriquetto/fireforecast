@@ -48,10 +48,21 @@ const frameworks = [
   { value: "df", label: "Distrito Federal" },
 ];
  
-export function ComboboxDemo() {
+export function ComboboxDemo({ onSelectCity  }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
- 
+
+  const handleSelect = (currentValue) => {
+    const selectedFramework = frameworks.find((framework) => framework.value === currentValue);
+    setValue(currentValue === value ? "" : currentValue);
+    setOpen(false);
+
+    // Passa a cidade selecionada para o componente pai
+    if (onSelectCity && selectedFramework) {
+      onSelectCity(selectedFramework.label);
+    }
+  };
+    
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -77,10 +88,7 @@ export function ComboboxDemo() {
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
+                  onSelect={() => handleSelect(framework.value)}
                 >
                   <Check
                     className={cn(
