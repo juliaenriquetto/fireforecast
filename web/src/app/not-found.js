@@ -7,8 +7,8 @@ export default function NotFoundPage() {
     <Layout className="justify-start">
       <main className="bg-background min-h-[65vh] grid place-items-center px-6 py-24 sm:py-32 lg:px-8">
         <div className="flex flex-col text-center">
-          <p className="text-white text-base font-semibold">404</p> 
-          <h2 className="from-foreground to-muted-foreground mt-4 h-14 bg-gradient-to-r bg-clip-text text-3xl font-semibold tracking-tighter text-transparent sm:text-4xl xl:text-5xl/none text-amber-700">
+          <p className="text-orange-400 text-base font-semibold">404</p> 
+          <h2 className="mt-4 h-14 text-3xl font-semibold tracking-tighter text-white sm:text-4xl xl:text-5xl">
             Página não encontrada
           </h2>
           <p className="text-muted-foreground mt-4 text-base leading-7">
