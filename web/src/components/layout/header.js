@@ -58,6 +58,7 @@ export default function Header() {
           <nav className="mx-auto flex h-[52px] w-full max-w-5xl flex-row justify-between gap-x-4 px-6 py-2 md:max-w-7xl md:gap-x-10 ">
             <Link className="flex items-center justify-center" href="/">
               <FireforecastHeading />
+              <link rel="icon" href="/logo.png" />
             </Link>
             <div className="hidden w-full justify-end md:justify-between sm:flex">
               <div className="flex items-center gap-3 sm:gap-6">

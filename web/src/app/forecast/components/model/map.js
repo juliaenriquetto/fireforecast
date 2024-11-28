@@ -40,40 +40,64 @@ export default function MapComponent() {
 
     const loadMarkersFromCSV = async () => {
         const csvUrl = '/dados.csv';
-
-        const response = await fetch(csvUrl);
-        const csvText = await response.text();
-
-        if (L) {
-            const Papa = await import('papaparse');
-            Papa.parse(csvText, {
-                header: true,
-                complete: function (results) {
-                    console.log("Dados lidos do CSV:", results.data);
-                    results.data.forEach((row) => {
-                        const latitude = parseFloat(row.latitude);
-                        const longitude = parseFloat(row.longitude);
-                        const probabilidade = parseFloat(row.confidence);
-
-                        if (!isNaN(latitude) && !isNaN(longitude) && !isNaN(probabilidade)) {
-                            let color;
-                            if (probabilidade <= 25) color = 'lightyellow';
-                            else if (probabilidade <= 50) color = 'gold';
-                            else if (probabilidade <= 75) color = 'orange';
-                            else if (probabilidade <= 85) color = 'red';
-                            else color = 'darkred';
-
-                            L.circle([latitude, longitude], {
-                                color,
-                                radius: 5000,
-                                fillOpacity: 0.5,
-                            }).addTo(mapRef.current);
-                        } else {
-                            console.error("Valores inválidos:", { latitude, longitude, probabilidade });
-                        }
-                    });
-                },
-            });
+    
+        try {
+            const response = await fetch(csvUrl);
+            const csvText = await response.text();
+    
+            if (L) {
+                const Papa = await import('papaparse');
+                Papa.parse(csvText, {
+                    header: true,
+                    delimiter: ",",
+                    complete: function (results) {
+                        console.log("Dados lidos do CSV:", results.data);
+    
+                        results.data.forEach((row, index) => {
+                            // Log the entire row for debugging
+                            console.log(`Row ${index + 1}:`, row);
+    
+                            // Validate and parse values
+                            const latitude = parseFloat(row.latitude);
+                            const longitude = parseFloat(row.longitude);
+                            const probabilidade = parseFloat(row.probabilidade);
+    
+                            if (
+                                !isNaN(latitude) &&
+                                !isNaN(longitude) &&
+                                !isNaN(probabilidade) &&
+                                latitude !== undefined &&
+                                longitude !== undefined &&
+                                probabilidade !== undefined
+                            ) {
+                                // Determine the color based on 'probabilidade'
+                                let color;
+                                if (probabilidade <= 25) color = 'lightyellow';
+                                else if (probabilidade <= 50) color = 'gold';
+                                else if (probabilidade <= 75) color = 'orange';
+                                else if (probabilidade <= 85) color = 'red';
+                                else color = 'darkred';
+    
+                                // Add a circle marker to the map
+                                L.circle([latitude, longitude], {
+                                    color,
+                                    radius: 5000,
+                                    fillOpacity: 0.5,
+                                }).addTo(mapRef.current);
+                            } else {
+                                // Log details of invalid rows
+                                console.warn(
+                                    `Valores inválidos na linha ${index + 1}:`,
+                                    row,
+                                    { latitude, longitude, probabilidade }
+                                );
+                            }
+                        });
+                    },
+                });
+            }
+        } catch (error) {
+            console.error("Erro ao carregar ou processar o CSV:", error);
         }
     };
 
