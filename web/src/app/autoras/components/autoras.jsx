@@ -42,7 +42,7 @@ export default function Authors() {
                         <div className="flex h-full w-full flex-col items-center justify-start gap-y-1 px-8 md:max-w-lg lg:max-w-2xl">
                             <article className="flex w-full flex-col items-start gap-y-14 pb-10 md:w-[40rem] lg:w-[50rem]">
                                 <div className="flex flex-col gap-y-2">
-                                    <h2 className="text-2xl font-semibold tracking-tighter text-white sm:text-3xl xl:text-4xl">
+                                    <h2 className="text-2xl font-semibold tracking-tighter sm:text-3xl xl:text-4xl bg-gradient-to-r from-[hsl(0,85%,50%)] to-[hsl(30,100%,50%)] bg-clip-text text-transparent">
                                     Autoras
                                     </h2>
                                 </div>
@@ -57,7 +57,7 @@ export default function Authors() {
                                                  className="rounded-full"
                                             />
                                             <div className="flex flex-col items-center gap-y-2">
-                                            <h1 className="font-sans-heading text-base font-medium tracking-tighter md:text-lg lg:text-xl">
+                                            <h1 className="text-base font-medium tracking-tighter md:text-lg lg:text-xl">
                                                 {author.name}
                                             </h1>
                                             <div className="text-muted-foreground flex flex-row items-center gap-x-2">
