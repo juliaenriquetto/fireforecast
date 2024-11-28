@@ -9,6 +9,7 @@ import * as React from "react";
 
 export default function Forecast() {
   const [date, setDate] = React.useState(new Date());
+  const [selectedCity, setSelectedCity] = React.useState("");
 
   return (
     <Layout className="h-full w-full justify-start">
@@ -55,9 +56,9 @@ export default function Forecast() {
             </div> <br/>
 
             <h2>Seu estado</h2>
-            <ComboboxDemo /> <br/>
+            <ComboboxDemo onSelectCity={(city) => setSelectedCity(city)}/> <br/>
 
-            <Sms />
+            <Sms selectedCity={selectedCity} />
           </div>
         </main>
       </div>
